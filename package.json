@@ -1,0 +1,23 @@
+{
+  "name": "discord-ticket-bot-base",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chefmine8/Discord-Ticket-Bot-Base.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chefmine8/Discord-Ticket-Bot-Base/issues"
+  },
+  "homepage": "https://github.com/Chefmine8/Discord-Ticket-Bot-Base#readme",
+  "dependencies": {
+    "discord.js": "^14.26.4"
+  }
+}
