@@ -14,7 +14,12 @@ const client = new Client({
 });
 
 // Fonctions pour gérer la BDD JSON
-const getTickets = () => JSON.parse(fs.readFileSync('./tickets.json', 'utf8'));
+const getTickets = () => {
+    if (!fs.existsSync('./tickets.json')) {
+        fs.writeFileSync('./tickets.json', '{}');
+    }
+    return JSON.parse(fs.readFileSync('./tickets.json', 'utf8'));
+};
 const saveTickets = (data) => fs.writeFileSync('./tickets.json', JSON.stringify(data, null, 2));
 
 client.once('ready', () => {
@@ -175,6 +180,10 @@ async function createTicketChannel(user, categoryName, staffOpener = null) {
             {
                 id: categoryConfig.roleId, // Rôle staff spécifique à la catégorie
                 allow: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages],
+            },
+            {
+                id: client.user.id, // On donne explicitement l'accès au bot
+                allow: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ManageChannels],
             }
         ],
     });
