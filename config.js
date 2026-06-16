@@ -2,6 +2,7 @@ module.exports = {
     token: "",
     guildId: "",
     archiveChannelId: "",
+    staffRoleId: '',
 
     // Le préfixe pour les commandes staff (!r, !close, etc.)
     prefix: "!",

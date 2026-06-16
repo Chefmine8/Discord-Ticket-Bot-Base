@@ -71,9 +71,32 @@ client.on('messageCreate', async message => {
 
     // === CAS 2 : Le Staff utilise des commandes dans le salon ===
     if (message.guild && message.content.startsWith(config.prefix)) {
+        if (!message.member.roles.cache.has(config.staffRoleId)) {
+            return message.reply("❌ Vous n'avez pas la permission d'utiliser les commandes de gestion de tickets.");
+        }
+
         const args = message.content.slice(config.prefix.length).trim().split(/ +/);
         const command = args.shift().toLowerCase();
 
+        // 🛠️ COMMANDE HELP
+        if (command === 'help') {
+            const helpEmbed = new EmbedBuilder()
+                .setTitle("🛠️ Commandes Staff - Assistance")
+                .setColor('#2b2d31')
+                .setDescription("Voici la liste des commandes disponibles pour le rôle Staff :")
+                .addFields(
+                    { name: `\`${config.prefix}help\``, value: "Affiche ce menu d'aide." },
+                    { name: `\`${config.prefix}r <message/fichier>\``, value: "Répond à l'utilisateur en DM depuis son ticket." },
+                    { name: `\`${config.prefix}rename <nom>\``, value: "Renomme le salon du ticket actuel." },
+                    { name: `\`${config.prefix}info\``, value: "Affiche les informations concernant le ticket actuel." },
+                    { name: `\`${config.prefix}close\``, value: "Ferme le ticket et archive la conversation." },
+                    { name: `\`${config.prefix}open @user <Catégorie>\``, value: "Ouvre manuellement un ticket pour un utilisateur." }
+                )
+                .setFooter({ text: "Bot de Tickets - Base" });
+
+            return message.reply({ embeds: [helpEmbed] });
+        }
+        
         // Trouver à qui appartient ce ticket
         const userId = Object.keys(tickets).find(key => tickets[key].channelId === message.channel.id);
 
